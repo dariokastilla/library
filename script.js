@@ -27,6 +27,7 @@ function displayBooks(){
     myLibrary.forEach((book) => {
         const card = document.createElement("div");
         card.className = "book-card";
+        card.dataset.id = book.id;
         const title = document.createElement("h3");
         title.textContent = book.title;
         const author = document.createElement("p");
@@ -35,16 +36,37 @@ function displayBooks(){
         pages.textContent = `Pages: ${book.pages}`;
         const read = document.createElement("p");
         read.textContent = `Read: ${book.read ? "Yes" : "No"}`;
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete book";
+        deleteBtn.addEventListener("click", () => {
+            deleteBook(card.dataset.id);
+        });
         
         card.appendChild(title);
         card.appendChild(author);
         card.appendChild(pages);
         card.appendChild(read);
+        card.appendChild(deleteBtn);
 
         library.appendChild(card);
     }
 )
 }
+
+
+function deleteBook(id){
+    const index = myLibrary.findIndex(book => book.id === id)
+    if (index !== -1){
+        myLibrary.splice(index, 1);
+        displayBooks();
+    }
+}
+
+
+
+
+
+
 
 
 const newBookBtn = document.getElementById("newBookButton");
